@@ -13,6 +13,6 @@ void loop() {
   //val = map(val,0,1023,0,255);p
   //Serial.println(i2c->fetchPhotoValue());
   //i2c->sendSpeed();
-  Serial.println(analogRead(0)); 
+  //Serial.println(analogRead(0)); 
   rp->run();
 }

@@ -1,5 +1,5 @@
 {
-    "sketch": "sketch_may17a.ino",
+    "sketch": "sketch_may17a\\sketch_may17a.ino",
     "board": "arduino:avr:uno",
     "port": "COM5"
 }

@@ -15,11 +15,8 @@ class I2CContoller {
   private:
   
   public:
-    enum ID : int {
-      PIC1 = 0x00,
-      PIC2 = 0x01,
-      PIC3 = 0x02,
-      PIC4 = 0x03,
+    enum I2C {
+
     };
 };
 
@@ -61,8 +58,6 @@ class PhotoSensorController {
     }
 };
 
-
-
 class EngineController {
   private:
 
@@ -71,7 +66,7 @@ class EngineController {
 
 class LunceController {
   private:
-  
+
   public:
 };
 
@@ -81,6 +76,6 @@ void loop() {
   //int val = analogRead(0);
   //val = map(val,0,1023,0,255);
   Serial.println(analogRead(0));
-  
+
   delay(100);
 }

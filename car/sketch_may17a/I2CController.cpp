@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <Wire.h>
 
 typedef uint8_t byte;
@@ -6,7 +7,7 @@ class I2CContoller {
 
   private:
     int count = 0;
-    
+    I2CContoller* i2c;
   public:
 
     I2CContoller(){
@@ -19,15 +20,37 @@ class I2CContoller {
       WHEEL_PIC = 0b1010011,
     };
 
-    byte fetchPhotoValue(){
-      if (Wire.requestFrom(PHOTO_PIC,1) > 0) {;
+    void fetchPhotoValue(byte* val){
+      int count = 0;
+      if (Wire.requestFrom(PHOTO_PIC,5) > 0) {;
         while(Wire.available()) {
-          byte val = Wire.read();
-          return val;
+          val[count] = Wire.read();
+          count++;
         }
       }
+      /*
+      for(int i = 0;i<5;i++){
+        Serial.print(val[i]);
+        Serial.print(",");
+      }
+      Serial.print("\n");
+      */
     }
-    
+
+/*
+    byte fetchPhotoValue(){
+      byte val;
+      if (Wire.requestFrom(PHOTO_PIC,5) > 0) {;
+        while(Wire.available()) {
+          val = Wire.read();
+          Serial.println(val);
+        }
+        
+      }
+      delay(500);
+      return val;
+    }
+  */
     void sendSpeed(){
       Wire.beginTransmission(WHEEL_PIC);
       Wire.write(count);
