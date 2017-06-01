@@ -1,7 +1,5 @@
 {
     "sketch": "car\\sketch_may17a\\sketch_may17a.ino",
-    "port": "COM3",
     "board": "arduino:avr:uno",
-    "output": null,
-    "_debugger": null
+    "port": "COM7"
 }

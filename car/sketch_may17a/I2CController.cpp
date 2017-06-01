@@ -6,7 +6,6 @@ typedef uint8_t byte;
 class I2CContoller {
 
   private:
-    int count = 0;
     I2CContoller* i2c;
   public:
 
@@ -15,47 +14,25 @@ class I2CContoller {
       Wire.setClock(400000);
     }
 
-    enum I2C {
+    typedef enum {
       PHOTO_PIC = 0b1010010,
-      WHEEL_PIC = 0b1010011,
-    };
+      DRIVE_PIC = 0b1010011,
+      RANCE_PIC = 0b0000000,
+    } PIC_ID;
 
-    void fetchPhotoValue(byte* val){
+    void getValue(byte* val,int n,PIC_ID pic){
       int count = 0;
-      if (Wire.requestFrom(PHOTO_PIC,5) > 0) {;
+      if (Wire.requestFrom(pic,n) > 0) {;
         while(Wire.available()) {
           val[count] = Wire.read();
           count++;
         }
       }
-      /*
-      for(int i = 0;i<5;i++){
-        Serial.print(val[i]);
-        Serial.print(",");
-      }
-      Serial.print("\n");
-      */
     }
 
-/*
-    byte fetchPhotoValue(){
-      byte val;
-      if (Wire.requestFrom(PHOTO_PIC,5) > 0) {;
-        while(Wire.available()) {
-          val = Wire.read();
-          Serial.println(val);
-        }
-        
-      }
-      delay(500);
-      return val;
-    }
-  */
-    void sendSpeed(){
-      Wire.beginTransmission(WHEEL_PIC);
-      Wire.write(count);
+    void sendValue(byte* val,int n,PIC_ID pic){
+      Wire.beginTransmission(pic);
+      Wire.write(val,n);
       Wire.endTransmission();
-      count++;
     }
-
 };

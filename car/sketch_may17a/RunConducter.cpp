@@ -1,7 +1,7 @@
-#ifndef I2C
-#define I2C
+#ifndef I2C_CPP
+#define I2C_CPP
 #include "I2CController.cpp"
-#endif I2C
+#endif
 
 class RunConducter {
   

@@ -1,7 +1,7 @@
-#ifndef I2C
-#define I2C
+#ifndef I2C_CPP
+#define I2C_CPP
 #include "I2CController.cpp"
-#endif I2C
+#endif 
 
 class PhotoSensorController {
   private:
@@ -20,19 +20,17 @@ class PhotoSensorController {
       midright = 0;
     }
 
-    void getValueI2C(){
+    void updateValue(){
         byte values[5] = {0,0,0,0,0};
-        i2c->fetchPhotoValue(values);
+        i2c->getValue(values,5,I2CContoller::PHOTO_PIC);
         left     = ((int)values[0]) << 2;
-        left     = left + ((int)values[4]/64 & 0b00000011);
+        left     = left + (values[4] >> 6) & 0b00000011;
         midleft  = ((int)values[1]) << 2;
-        midleft  = midleft + ((int)values[4]/16 & 0b00000011);
+        midleft  = midleft + (values[4] >> 4) & 0b00000011;
         midright = ((int)values[2]) << 2;
-        midright = midright + ((int)values[4]/4 & 0b00000011);
+        midright = midright + (values[4] >> 2) & 0b00000011;
         right    = ((int)values[3]) << 2;
-        right    = right + ((int)values[4] & 0b00000011);
-        
-        
+        right    = right + values[4] & 0b00000011;
     }
 
     int getLeft(){

@@ -1,9 +1,8 @@
-#ifndef I2C
-#define I2C
+#ifndef I2C_CPP
+#define I2C_CPP
 #include "I2CController.cpp"
 #include <Arduino.h>
-#endif I2C
-
+#endif 
 
 #include "PhotoSensorController.cpp"
 #include "DirectionController.cpp"
@@ -51,26 +50,10 @@ class RunPlanner {
         default :
           break;
       }
-      photo->getValueI2C();
-      //int value = i2c->fetchPhotoValue();
-      //value = value << 2;
-      //Serial.println(value);
-      
-      Serial.print(photo->getLeft());
-      Serial.print(" ");
-      Serial.print(photo->getMidleft());
-      Serial.print(" ");
-      Serial.print(photo->getMidright());
-      Serial.print(" ");
-      Serial.print(photo->getRight());
-      Serial.println(" ");
-      
-      
-      delay(500);
     }
 
     void getValues(){
-      
+      photo->updateValue();
     }
 
     void setState(STATE st){
@@ -79,6 +62,17 @@ class RunPlanner {
 
     STATE getState(){
       return nowState;
+    }
+
+    void debug(){
+      Serial.print(photo->getLeft());
+      Serial.print(" ");
+      Serial.print(photo->getMidleft());
+      Serial.print(" ");
+      Serial.print(photo->getMidright());
+      Serial.print(" ");
+      Serial.print(photo->getRight());
+      Serial.println(" ");
     }
     
 };
