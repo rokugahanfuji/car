@@ -5,6 +5,6 @@
 
 class LunceController {
   private:
-    I2CContoller* i2c;
+    I2CController* i2c;
   public:
 };

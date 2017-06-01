@@ -5,10 +5,10 @@
 #endif 
 
 #include "PhotoSensorController.cpp"
-#include "DirectionController.cpp"
+#include "DriveController.cpp"
 #include "LunceController.cpp"
-#include "EngineController.cpp"
-#include "RunConducter.cpp"
+#include "Judger/IJudger.cpp"
+#include "Judger/BinaryJudger.cpp"
 
 class RunPlanner {
   public : 
@@ -21,22 +21,22 @@ class RunPlanner {
 
   private:
     STATE nowState;
-    I2CContoller* i2c;
+    I2CController* i2c;
     PhotoSensorController *photo;
-    EngineController *engine;
-    RunConducter *conducter;
+    DriveController *drive;
+    IJudger = *judger;
 
   public:
     RunPlanner(){
       nowState = STOP;
-      i2c = new I2CContoller();
+      i2c = new I2CController();
       photo = new PhotoSensorController(i2c);
-      engine = new EngineController(i2c);
-      conducter = new RunConducter(i2c);
+      drive = new DriveController(i2c);
+      judger = new BinaryJudger(i2c);
     }
     
     void run(){
-      getValues();
+      update();
 
       switch (nowState){
         case STOP:
@@ -50,10 +50,12 @@ class RunPlanner {
         default :
           break;
       }
+      debug();
     }
 
-    void getValues(){
+    void update(){
       photo->updateValue();
+      drive->updateValue();
     }
 
     void setState(STATE st){
@@ -65,14 +67,20 @@ class RunPlanner {
     }
 
     void debug(){
+      Serial.println("-----------------------");
+      Serial.println("LEFT  MLEFT MRIGH RIGHT");
       Serial.print(photo->getLeft());
-      Serial.print(" ");
+      Serial.print("\t");
+      Serial.print("  ");
       Serial.print(photo->getMidleft());
-      Serial.print(" ");
+      Serial.print("\t");
+      Serial.print("");
       Serial.print(photo->getMidright());
-      Serial.print(" ");
+      Serial.print("\t");
+      Serial.print("  ");
       Serial.print(photo->getRight());
-      Serial.println(" ");
+      Serial.println();
+      delay(500);
     }
     
 };

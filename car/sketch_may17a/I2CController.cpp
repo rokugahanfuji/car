@@ -8,8 +8,7 @@ class I2CContoller {
   private:
     I2CContoller* i2c;
   public:
-
-    I2CContoller(){
+    I2CController(){
       Wire.begin();
       Wire.setClock(400000);
     }
@@ -20,14 +19,16 @@ class I2CContoller {
       RANCE_PIC = 0b0000000,
     } PIC_ID;
 
-    void getValue(byte* val,int n,PIC_ID pic){
-      int count = 0;
-      if (Wire.requestFrom(pic,n) > 0) {;
+    boolean getValue(byte* val,int n,PIC_ID pic){
+      if (Wire.requestFrom(pic,n) > 0) {
+        int count = 0;
         while(Wire.available()) {
           val[count] = Wire.read();
           count++;
         }
+        return true;
       }
+      return false;
     }
 
     void sendValue(byte* val,int n,PIC_ID pic){

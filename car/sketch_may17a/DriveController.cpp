@@ -3,14 +3,27 @@
 #include "I2CController.cpp"
 #endif
 
-class DirectionController {
+class DriveController {
   private:
+    int power;
     int direction;
-    I2CContoller* i2c;
+    I2CController* i2c;
   public:
-    DirectionController(I2CContoller* _i2c){
+    DriveController(I2CController* _i2c){
       i2c = _i2c;
+      power = 0;
       direction = 0;
+    }
+
+    void updateValue(){
+
+    }
+
+    int getPower(){
+      return power;
+    }
+    void setPower(int val){
+      power = val;
     }
     int getDirection(){
       return direction;

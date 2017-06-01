@@ -12,25 +12,26 @@ class PhotoSensorController {
     I2CContoller* i2c;
   
   public:
-    PhotoSensorController(I2CContoller* _i2c){
+    PhotoSensorController(I2CController* _i2c){
       i2c = _i2c;
       left = 0;
-      midleft = 0;
+      midleft = 300;
       right = 0;
       midright = 0;
     }
 
     void updateValue(){
         byte values[5] = {0,0,0,0,0};
-        i2c->getValue(values,5,I2CContoller::PHOTO_PIC);
-        left     = ((int)values[0]) << 2;
-        left     = left + (values[4] >> 6) & 0b00000011;
-        midleft  = ((int)values[1]) << 2;
-        midleft  = midleft + (values[4] >> 4) & 0b00000011;
-        midright = ((int)values[2]) << 2;
-        midright = midright + (values[4] >> 2) & 0b00000011;
-        right    = ((int)values[3]) << 2;
-        right    = right + values[4] & 0b00000011;
+        if (i2c->getValue(values,5,I2CContoller::PHOTO_PIC) == true) {
+          left     = ((int)values[0]) << 2;
+          left     = left + (values[4] >> 6) & 0b00000011;
+          midleft  = ((int)values[1]) << 2;
+          midleft  = midleft + (values[4] >> 4) & 0b00000011;
+          midright = ((int)values[2]) << 2;
+          midright = midright + (values[4] >> 2) & 0b00000011;
+          right    = ((int)values[3]) << 2;
+          right    = right + values[4] & 0b00000011;
+        }
     }
 
     int getLeft(){
